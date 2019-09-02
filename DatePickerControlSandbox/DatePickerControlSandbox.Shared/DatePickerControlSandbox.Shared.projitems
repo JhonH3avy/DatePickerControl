@@ -18,26 +18,44 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HseDatePicker.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Controls\HseDatePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-	<ItemGroup>
-		<Content Include="$(MSBuildThisFileDirectory)Assets\LockScreenLogo.scale-200.png" />
-		<Content Include="$(MSBuildThisFileDirectory)Assets\SplashScreen.scale-200.png" />
-		<Content Include="$(MSBuildThisFileDirectory)Assets\Square150x150Logo.scale-200.png" />
-		<Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.scale-200.png" />
-		<Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-		<Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.png" />
-		<Content Include="$(MSBuildThisFileDirectory)Assets\Wide310x150Logo.scale-200.png" />
-	</ItemGroup>
-	<ItemGroup>
-		<PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
-	</ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\SplashScreen.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="C:\Users\JhonContreras\source\repos\DatePickerControlSandbox\DatePickerControlSandbox\DatePickerControlSandbox.Shared\Controls\DatePicker.xaml.cs">
+      <DependentUpon>DatePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="C:\Users\JhonContreras\source\repos\DatePickerControlSandbox\DatePickerControlSandbox\DatePickerControlSandbox.Shared\Controls\HseDatePicker.xaml.cs">
+      <DependentUpon>HseDatePicker.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

@@ -1,16 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
+# Blend for Visual Studio Version 16
 VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DatePickerControlSandbox.Shared", "DatePickerControlSandbox\DatePickerControlSandbox.Shared\DatePickerControlSandbox.Shared.shproj", "{6279C845-92F8-4333-AB99-3D213163593C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatePickerControlSandbox.UWP", "DatePickerControlSandbox\DatePickerControlSandbox.UWP\DatePickerControlSandbox.UWP.csproj", "{1640A56F-12D6-4577-A357-48ED692DE8B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatePickerControlSandbox.Wasm", "DatePickerControlSandbox\DatePickerControlSandbox.Wasm\DatePickerControlSandbox.Wasm.csproj", "{D5BCF294-594A-46D0-9F3B-0A6FC05AB3DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatePickerControlSandbox.Wasm", "DatePickerControlSandbox\DatePickerControlSandbox.Wasm\DatePickerControlSandbox.Wasm.csproj", "{D5BCF294-594A-46D0-9F3B-0A6FC05AB3DF}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		DatePickerControlSandbox\DatePickerControlSandbox.Shared\DatePickerControlSandbox.Shared.projitems*{1640a56f-12d6-4577-a357-48ed692de8b1}*SharedItemsImports = 4
 		DatePickerControlSandbox\DatePickerControlSandbox.Shared\DatePickerControlSandbox.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
