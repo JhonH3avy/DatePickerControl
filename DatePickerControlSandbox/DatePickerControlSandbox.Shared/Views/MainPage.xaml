@@ -11,5 +11,6 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock Text="{Binding SelectedDateTimeString, ElementName=picker}"></TextBlock>
         <controls:HseDatePicker Grid.Row="0" PopupVisibility="True" x:Name="picker"/>
+        <!--<controls:TestControl></controls:TestControl>-->
     </Grid>
 </Page>

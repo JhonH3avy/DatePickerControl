@@ -21,18 +21,19 @@
     </UserControl.Resources>
 
     <Border>
-        <StackPanel Orientation="Horizontal" MaxHeight="40" Width="Auto">
+        <StackPanel Orientation="Horizontal" MaxHeight="35" Width="Auto">
             <TextBox x:Name="InputTextBox" 
                      BeforeTextChanging="TextBox_OnBeforeTextChanging"
                      MinWidth="150"
                      Text="{Binding SelectedDateTimeStringProp}"/>
-            <Button Click="ShowPopupOffsetClicked" Style="{StaticResource CalendarButtonStyle}" />
+            <Button Click="ShowPopupOffsetClicked" Style="{StaticResource CalendarButtonStyle}" /> 
             <Popup x:Name="StandardPopup">
                 <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}"
                         Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
                         BorderThickness="2"
                         Width="Auto"
-                        Height="Auto">
+                        Height="Auto"
+                        Padding="10">
                     <Grid Height="Auto"
                           Width="Auto"
                           RowSpacing="10"
@@ -49,7 +50,12 @@
                         </Grid.ColumnDefinitions>
 
                         <CalendarView x:Name="DatePickerPart" Grid.Row="0" Grid.Column="0" SelectionMode="Single" SelectedDatesChanged="CalendarView_OnSelectedDatesChanged" />
-                        <TimePicker x:Name="TimePickerPart" Grid.Row="0" Grid.Column="1" TimeChanged="TimePicker_OnTimeChanged" />
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Height="35" VerticalAlignment="Center" Spacing="5">
+                            <TextBox x:Name="HourPart" BeforeTextChanging="TimePickerHourPart_OnBeforeTextChanging" ></TextBox>
+                            <TextBlock>:</TextBlock>
+                            <TextBox x:Name="MinutePart" BeforeTextChanging="TimePickerMinutePart_OnBeforeTextChanging" ></TextBox>
+                        </StackPanel>
+                        <!--<TimePicker x:Name="TimePickerPart" Grid.Row="0" Grid.Column="1" TimeChanged="TimePicker_OnTimeChanged" />-->
                         <Button Grid.Row="1" Grid.Column="1" Content="Close" Click="ClosePopupClicked" HorizontalAlignment="Right"/>
                     </Grid>
                 </Border>

@@ -25,7 +25,6 @@ namespace DatePickerControlSandbox.Shared.Controls
         public HseDatePicker()
         {
             this.InitializeComponent();
-            DataContext = this;
             tempDateTime = new DateTime();
             InputTextBox.AddHandler(KeyDownEvent, new KeyEventHandler((s, e) =>
             {
@@ -41,12 +40,16 @@ namespace DatePickerControlSandbox.Shared.Controls
                         DatePickerPart.SelectedDates[0] = SelectedDateTime;
                     }
 
-                    TimePickerPart.Time = SelectedDateTime.TimeOfDay;
+                    //TimePickerPart.Time = SelectedDateTime.TimeOfDay;
+                    HourPart.Text = SelectedDateTime.Hour.ToString();
+                    MinutePart.Text = SelectedDateTime.Minute.ToString();
                 }
                 else if (e.Key == Windows.System.VirtualKey.Delete)
                 {
                     SelectedDateTime = new DateTimeOffset();
-                    TimePickerPart.Time = new TimeSpan(12, 0, 0);
+                    //TimePickerPart.Time = new TimeSpan(12, 0, 0);
+                    HourPart.Text = "12";
+                    MinutePart.Text = "00";
                     UpdateSelectedDateTimeString("");
                     if (DatePickerPart.SelectedDates.Count > 0)
                     {
@@ -151,6 +154,38 @@ namespace DatePickerControlSandbox.Shared.Controls
             else if (dateRegex.IsMatch(args.NewText))
             {
                 args.Cancel = false;
+            }
+            else
+            {
+                args.Cancel = true;
+            }
+        }
+
+        private void TimePickerHourPart_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            var numberRegex = new Regex(@"^([0-9]|1[0-9]|2[0-3])?$");
+            if (numberRegex.IsMatch(args.NewText))
+            {
+                var builder = new DateTimeOffset(SelectedDateTime.Year, SelectedDateTime.Month, SelectedDateTime.Day, 
+                    string.IsNullOrEmpty(args.NewText) ? 0 : int.Parse(args.NewText), SelectedDateTime.Minute, 0, SelectedDateTime.Offset);
+                SelectedDateTime = builder;
+                UpdateSelectedDateTimeString(SelectedDateTime.ToString());
+            }
+            else
+            {
+                args.Cancel = true;
+            }
+        }
+
+        private void TimePickerMinutePart_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            var numberRegex = new Regex(@"^([0-5]?[0-9]?)$");
+            if (numberRegex.IsMatch(args.NewText))
+            {
+                var builder = new DateTimeOffset(SelectedDateTime.Year, SelectedDateTime.Month, SelectedDateTime.Day, SelectedDateTime.Hour,
+                    string.IsNullOrEmpty(args.NewText) ? 0 : int.Parse(args.NewText), 0, SelectedDateTime.Offset);
+                SelectedDateTime = builder;
+                UpdateSelectedDateTimeString(SelectedDateTime.ToString());
             }
             else
             {
