@@ -121,7 +121,7 @@ namespace DatePickerControlSandbox.Shared.Controls
             if (selectedTime == null) return;
             var builder = new DateTimeOffset(SelectedDateTime.Year, SelectedDateTime.Month, SelectedDateTime.Day, selectedTime.Hours, selectedTime.Minutes, 0, SelectedDateTime.Offset);
             SelectedDateTime = builder;
-            UpdateSelectedDateTimeString(SelectedDateTime.ToString());
+            UpdateSelectedDateTimeString(SelectedDateTime.ToString("dd-MM-yyyy HH:mm z"));
         }
 
         private void UpdateSelectedDateTimeString(string updatedString)
@@ -132,8 +132,8 @@ namespace DatePickerControlSandbox.Shared.Controls
 
         private void TextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            var quickDateRegex = new Regex(@"^([0-9]{0,2})(?:\.?)([0-9]{0,2})(?:\.?)([0-9]{0,4})(?:\s?)([0-9]{0,2})(?::?)([0-9]{0,2})$");
-            var dateRegex = new Regex(@"[0-9]{2}\/?[0-9]{2}\/?[0-9]{4}\s?[0-9]{2}:?[0-9]{2}:?[0-9]{2}\s?[+-]?[0-9]{2}:?[0-9]{2}");
+            var quickDateRegex = new Regex(@"^([0-9]{0,2})(?:\.?)([0-9]{0,2})(?:\.?)([0-9]{0,4})(?:\s?)([0-9]{0,2})(?:\.?)([0-9]{0,2})$");
+            var dateRegex = new Regex(@"[0-9]{1,2}\/?[0-9]{1,2}\/?[0-9]{4}\s?[0-9]{1,2}:?[0-9]{2}:?[0-9]{2}\s?(?:[Aa][Mm]|[Pp][Mm])?\s?[+-]?[0-9]{1,2}:?[0-9]{2}");
             if (quickDateRegex.IsMatch(args.NewText))
             {
                 var groups = quickDateRegex.Match(args.NewText).Groups;
