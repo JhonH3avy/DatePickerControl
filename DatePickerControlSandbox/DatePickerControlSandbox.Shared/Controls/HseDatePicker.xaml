@@ -9,7 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <UserControl.Resources>
+    <!--<UserControl.Resources>
         <Style TargetType="Button" x:Name="CalendarButtonStyle">
             <Setter Property="Background" Value="White"></Setter>
             <Setter Property="Content">
@@ -18,7 +18,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </UserControl.Resources>
+    </UserControl.Resources>-->
 
     <Border>
         <StackPanel Orientation="Horizontal" MaxHeight="40" Width="Auto">
@@ -26,7 +26,9 @@
                      BeforeTextChanging="TextBox_OnBeforeTextChanging"
                      MinWidth="150"
                      Text="{Binding SelectedDateTimeStringProp}"/>
-            <Button Click="ShowPopupOffsetClicked" Style="{StaticResource CalendarButtonStyle}" />
+            <Button Click="ShowPopupOffsetClicked" Background="White" >
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE787;"/>
+            </Button>
             <Popup x:Name="StandardPopup">
                 <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}"
                         Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
