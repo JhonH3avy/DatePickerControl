@@ -132,7 +132,7 @@ namespace DatePickerControlSandbox.Shared.Controls
 
         private void TextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            var quickDateRegex = new Regex(@"^([0-9]{0,2})(?:\.?)([0-9]{0,2})(?:\.?)([0-9]{0,4})(?:\s?)([0-9]{0,2})(?:\.?)([0-9]{0,2})$");
+            var quickDateRegex = new Regex(@"^([0-9]{0,2})(?:[./]?)([0-9]{0,2})(?:[./]?)([0-9]{0,4})(?:\s?)([0-9]{0,2})(?:[.:]?)([0-9]{0,2})$");
             var dateRegex = new Regex(@"[0-9]{1,2}\/?[0-9]{1,2}\/?[0-9]{4}\s?[0-9]{1,2}:?[0-9]{2}:?[0-9]{2}\s?(?:[Aa][Mm]|[Pp][Mm])?\s?[+-]?[0-9]{1,2}:?[0-9]{2}");
             if (quickDateRegex.IsMatch(args.NewText))
             {
