@@ -5,6 +5,7 @@
     xmlns:local="using:DatePickerControlSandbox.Shared.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:input="using:Telerik.UI.Xaml.Controls.Input"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -50,8 +51,15 @@
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <CalendarView x:Name="DatePickerPart" Grid.Row="0" Grid.Column="0" SelectionMode="Single" SelectedDatesChanged="CalendarView_OnSelectedDatesChanged" />
-                        <TimePicker x:Name="TimePickerPart" Grid.Row="0" Grid.Column="1" TimeChanged="TimePicker_OnTimeChanged" />
+                        <!--<CalendarView x:Name="DatePickerPart" Grid.Row="0" Grid.Column="0" SelectionMode="Single" SelectedDatesChanged="CalendarView_OnSelectedDatesChanged" />-->
+                        <input:RadCalendar 
+                            Grid.Row="0" 
+                            Grid.Column="0" 
+                            x:Name="DatePickerPart" 
+                            CurrentDateChanged="CalendarView_OnCurrentDatesChanged"
+                            Width="350"
+                            Height="350"/>
+                        <!--<TimePicker x:Name="TimePickerPart" Grid.Row="0" Grid.Column="1" TimeChanged="TimePicker_OnTimeChanged" />-->
                         <Button Grid.Row="1" Grid.Column="1" Content="Close" Click="ClosePopupClicked" HorizontalAlignment="Right"/>
                     </Grid>
                 </Border>

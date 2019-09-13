@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Telerik.UI.Xaml.Controls.Input.Calendar;
 
 namespace DatePickerControlSandbox.Shared.Controls
 {
@@ -29,30 +30,30 @@ namespace DatePickerControlSandbox.Shared.Controls
             tempDateTime = new DateTime();
             InputTextBox.AddHandler(KeyDownEvent, new KeyEventHandler((s, e) =>
             {
-                if (e.Key == Windows.System.VirtualKey.Enter)
-                {
-                    UpdateSelectedDateTimeString(SelectedDateTime.ToString());
-                    if (DatePickerPart.SelectedDates.Count <= 0)
-                    {
-                        DatePickerPart.SelectedDates.Add(SelectedDateTime);
-                    }
-                    else
-                    {
-                        DatePickerPart.SelectedDates[0] = SelectedDateTime;
-                    }
+                //if (e.Key == Windows.System.VirtualKey.Enter)
+                //{
+                //    UpdateSelectedDateTimeString(SelectedDateTime.ToString());
+                //    if (DatePickerPart.SelectedDates.Count <= 0)
+                //    {
+                //        DatePickerPart.SelectedDates.Add(SelectedDateTime);
+                //    }
+                //    else
+                //    {
+                //        DatePickerPart.SelectedDates[0] = SelectedDateTime;
+                //    }
 
-                    TimePickerPart.Time = SelectedDateTime.TimeOfDay;
-                }
-                else if (e.Key == Windows.System.VirtualKey.Delete)
-                {
-                    SelectedDateTime = new DateTimeOffset();
-                    TimePickerPart.Time = new TimeSpan(12, 0, 0);
-                    UpdateSelectedDateTimeString("");
-                    if (DatePickerPart.SelectedDates.Count > 0)
-                    {
-                        DatePickerPart.SelectedDates.RemoveAt(0);
-                    }
-                }
+                //    TimePickerPart.Time = SelectedDateTime.TimeOfDay;
+                //}
+                //else if (e.Key == Windows.System.VirtualKey.Delete)
+                //{
+                //    SelectedDateTime = new DateTimeOffset();
+                //    TimePickerPart.Time = new TimeSpan(12, 0, 0);
+                //    UpdateSelectedDateTimeString("");
+                //    if (DatePickerPart.SelectedDates.Count > 0)
+                //    {
+                //        DatePickerPart.SelectedDates.RemoveAt(0);
+                //    }
+                //}
             }), true);
         }
 
@@ -102,11 +103,20 @@ namespace DatePickerControlSandbox.Shared.Controls
             if (StandardPopup.IsOpen) { StandardPopup.IsOpen = false; }
         }
 
-        private void CalendarView_OnSelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
+        //private void CalendarView_OnSelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
+        //{
+        //    if (args.AddedDates.Count <= 0) return;
+        //    var selectedDate = args.AddedDates[0];
+        //    if (selectedDate == null) return;
+        //    var builder = new DateTimeOffset(selectedDate.Year, selectedDate.Month, selectedDate.Day, SelectedDateTime.Hour, SelectedDateTime.Minute, 0, SelectedDateTime.Offset);
+        //    SelectedDateTime = builder;
+        //    UpdateSelectedDateTimeString(SelectedDateTime.ToString());
+        //}
+
+        private void CalendarView_OnCurrentDatesChanged(object sender, CurrentSelectionChangedEventArgs args)
         {
-            if (args.AddedDates.Count <= 0) return;
-            var selectedDate = args.AddedDates[0];
-            if (selectedDate == null) return;
+            if (args.NewSelection == null) return;
+            var selectedDate = args.NewSelection.Value;
             var builder = new DateTimeOffset(selectedDate.Year, selectedDate.Month, selectedDate.Day, SelectedDateTime.Hour, SelectedDateTime.Minute, 0, SelectedDateTime.Offset);
             SelectedDateTime = builder;
             UpdateSelectedDateTimeString(SelectedDateTime.ToString());
