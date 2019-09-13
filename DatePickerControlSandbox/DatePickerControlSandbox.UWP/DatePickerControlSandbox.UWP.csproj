@@ -12,6 +12,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
+    <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
+      <Version>1.0.1.6</Version>
+    </PackageReference>
     <PackageReference Include="Uno.Core" Version="1.29.0-dev.93" />
   </ItemGroup>
   <PropertyGroup>
@@ -100,13 +103,6 @@
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\..\..\..\..\..\..\git\Uno.Telerik.UI-For-UWP\Controls\Input\Input.UWP\Telerik.Input.csproj">
-      <Project>{7B393A85-854B-46AD-9AE0-20F65EC3474C}</Project>
-      <Name>Telerik.Input</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
