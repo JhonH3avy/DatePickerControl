@@ -34,7 +34,8 @@ namespace DatePickerControlSandbox.Shared.Controls
                 if (e.Key == Windows.System.VirtualKey.Enter)
                 {
                     DatePickerPart.SelectedDateRange = new CalendarDateRange(SelectedDateTime.Date, SelectedDateTime.Date);
-                    DatePickerPart.MoveToDate(SelectedDateTime.Date);
+                    DatePickerPart.DisplayDate = SelectedDateTime.Date;
+                    //DatePickerPart.MoveToDate(SelectedDateTime.Date);
 
                     //TimePickerPart.Time = SelectedDateTime.TimeOfDay;
                     HourPart.Text = SelectedDateTime.Hour.ToString();
@@ -47,9 +48,9 @@ namespace DatePickerControlSandbox.Shared.Controls
                     //TimePickerPart.Time = new TimeSpan(12, 0, 0);
                     HourPart.Text = "12";
                     MinutePart.Text = "00";
-                    UpdateSelectedDateTimeString("");
                     DatePickerPart.SelectedDateRange = null;
                     DatePickerPart.MoveToDate(DateTime.Now);
+                    UpdateSelectedDateTimeString("");
                 }
             }), true);
         }
@@ -197,6 +198,15 @@ namespace DatePickerControlSandbox.Shared.Controls
             {
                 args.Cancel = true;
             }
+        }
+
+        private void DatePickerPart_OnSelectionChanged(object sender, CurrentSelectionChangedEventArgs e)
+        {
+            if (e.NewSelection == null) return;
+            var selectedDate = e.NewSelection.Value;
+            var builder = new DateTimeOffset(selectedDate.Year, selectedDate.Month, selectedDate.Day, SelectedDateTime.Hour, SelectedDateTime.Minute, 0, SelectedDateTime.Offset);
+            SelectedDateTime = builder;
+            UpdateSelectedDateTimeString(SelectedDateTime.ToString());
         }
     }
 }

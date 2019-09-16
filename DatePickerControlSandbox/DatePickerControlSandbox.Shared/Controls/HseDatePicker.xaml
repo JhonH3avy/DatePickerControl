@@ -57,6 +57,7 @@
                             Grid.Column="0" 
                             x:Name="DatePickerPart" 
                             CurrentDateChanged="CalendarView_OnCurrentDatesChanged"
+                            SelectionChanged="DatePickerPart_OnSelectionChanged"
                             Width="350"
                             Height="350"/>
                         <!--<TimePicker x:Name="TimePickerPart" Grid.Row="0" Grid.Column="1" TimeChanged="TimePicker_OnTimeChanged" />-->
