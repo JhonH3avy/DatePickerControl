@@ -38,7 +38,7 @@
     <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.244" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\git\Uno.Telerik.UI-For-UWP\Controls\Input\Input.UWP\Telerik.Input.csproj" />
+    <ProjectReference Include="..\Uno.Telerik\Input\Input.UWP\Telerik.Input.csproj" />
   </ItemGroup>
   <Import Project="..\DatePickerControlSandbox.Shared\DatePickerControlSandbox.Shared.projitems" Label="Shared" Condition="Exists('..\DatePickerControlSandbox.Shared\DatePickerControlSandbox.Shared.projitems')" />
 </Project>
