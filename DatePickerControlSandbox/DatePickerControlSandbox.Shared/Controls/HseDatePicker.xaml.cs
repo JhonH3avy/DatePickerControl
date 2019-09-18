@@ -22,13 +22,11 @@ namespace DatePickerControlSandbox.Shared.Controls
 {
     public sealed partial class HseDatePicker : UserControl
     {
-        private DateTime tempDateTime;
 
         public HseDatePicker()
         {
             this.InitializeComponent();
             DataContext = this;
-            tempDateTime = new DateTime();
             InputTextBox.AddHandler(KeyDownEvent, new KeyEventHandler((s, e) =>
             {
                 if (e.Key == Windows.System.VirtualKey.Enter)
@@ -198,15 +196,6 @@ namespace DatePickerControlSandbox.Shared.Controls
             {
                 args.Cancel = true;
             }
-        }
-
-        private void DatePickerPart_OnSelectionChanged(object sender, CurrentSelectionChangedEventArgs e)
-        {
-            if (e.NewSelection == null) return;
-            var selectedDate = e.NewSelection.Value;
-            var builder = new DateTimeOffset(selectedDate.Year, selectedDate.Month, selectedDate.Day, SelectedDateTime.Hour, SelectedDateTime.Minute, 0, SelectedDateTime.Offset);
-            SelectedDateTime = builder;
-            UpdateSelectedDateTimeString(SelectedDateTime.ToString());
         }
     }
 }
