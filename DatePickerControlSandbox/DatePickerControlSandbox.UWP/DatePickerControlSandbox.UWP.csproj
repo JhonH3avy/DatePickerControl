@@ -15,7 +15,7 @@
     <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
       <Version>1.0.1.7</Version>
     </PackageReference>
-    <PackageReference Include="Uno.Core" Version="1.29.0-dev.93" />
+    <PackageReference Include="Uno.Core" Version="1.29.0" />
   </ItemGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
