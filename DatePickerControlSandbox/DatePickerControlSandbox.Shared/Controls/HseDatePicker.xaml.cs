@@ -99,9 +99,10 @@ namespace DatePickerControlSandbox.Shared.Controls
             if (args.NewSelection == null) return;
             Console.WriteLine("There is a new value");
             var selectedDate = args.NewSelection.Value;
+            Console.WriteLine($"Selected date: {selectedDate.ToString("dd/MM/yyyy")}");
             var builder = new DateTimeOffset(selectedDate.Year, selectedDate.Month, selectedDate.Day, SelectedDateTime.Hour, SelectedDateTime.Minute, 0, SelectedDateTime.Offset);
             SelectedDateTime = builder;
-            UpdateSelectedDateTimeString(SelectedDateTime.ToString("d"));
+            UpdateSelectedDateTimeString(SelectedDateTime.ToString("dd/MM/yyyy"));
         }
         
         private void UpdateSelectedDateTimeString(string updatedString)
