@@ -25,7 +25,7 @@ namespace DatePickerControlSandbox.Shared.Controls
         public HseDatePicker()
         {
             this.InitializeComponent();
-            DataContext = this;
+            //DataContext = this;
             InputTextBox.AddHandler(KeyDownEvent, new KeyEventHandler((s, e) =>
             {
                 if (e.Key == Windows.System.VirtualKey.Enter || e.Key == Windows.System.VirtualKey.Space)
@@ -55,16 +55,16 @@ namespace DatePickerControlSandbox.Shared.Controls
 
 
         public static readonly DependencyProperty SelectedDateTimeProperty = DependencyProperty.Register(
-            "SelectedDateTime", typeof(DateTime), typeof(HseDatePicker), new PropertyMetadata(null, SelectedValueChanged));
+            "SelectedDateTime", typeof(DateTime), typeof(HseDatePicker), new PropertyMetadata(null));
 
-        private static void SelectedValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is HseDatePicker picker)
-            {
-                //picker.DatePickerPart.SelectedDateRange = new CalendarDateRange(picker.SelectedDateTime, picker.SelectedDateTime);
-                //picker.DatePickerPart.DisplayDate = picker.SelectedDateTime;
-            }
-        }
+        //private static void SelectedValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    if (d is HseDatePicker picker)
+        //    {
+        //        //picker.DatePickerPart.SelectedDateRange = new CalendarDateRange(picker.SelectedDateTime, picker.SelectedDateTime);
+        //        //picker.DatePickerPart.DisplayDate = picker.SelectedDateTime;
+        //    }
+        //}
 
         public DateTime SelectedDateTime
         {
