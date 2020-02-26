@@ -11,11 +11,12 @@
     d:DesignWidth="400">
 
     <Border>
-        <StackPanel Orientation="Horizontal" MaxHeight="40" Width="Auto">
+        <StackPanel Orientation="Horizontal" MaxHeight="40" MinWidth="{Binding MinWidth}" Width="Auto">
             <TextBox x:Name="InputTextBox" 
                      BeforeTextChanging="TextBox_OnBeforeTextChanging"
+                     LostFocus="InputTextBox_OnLostFocus"
                      MinWidth="150"
-                     Text="{Binding SelectedDateTimeStringProp}"/>
+                     Width="Auto"/>
             <Button Click="ShowPopupOffsetClicked" Background="White" >
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE787;"/>
             </Button>
@@ -46,8 +47,7 @@
                             Width="350"
                             Height="350"/>
 
-                        <Button HorizontalAlignment="Right"
-                            Grid.Row="0" Grid.Column="0" Click="ClosePopupClicked" Background="White" >
+                        <Button Grid.Row="0" Grid.Column="0" Click="ClosePopupClicked" Background="White" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE894;"/>
                         </Button>
                     </Grid>

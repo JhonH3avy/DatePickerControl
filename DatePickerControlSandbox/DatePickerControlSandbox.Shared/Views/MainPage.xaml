@@ -9,7 +9,12 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="{Binding SelectedDateTimeString, ElementName=picker}"></TextBlock>
-        <controls:HseDatePicker Grid.Row="0" PopupVisibility="True" x:Name="picker"/>
+        <Button Click="ButtonBase_OnClick">
+            <TextBlock>
+                <TextBlock.Text>
+                    Click to open dialog
+                </TextBlock.Text>
+            </TextBlock>
+        </Button>
     </Grid>
 </Page>
