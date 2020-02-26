@@ -1,0 +1,73 @@
+﻿<UserControl
+    x:Class="DatePickerControlSandbox.Shared.Views.ReportView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DatePickerControlSandbox.Shared.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helpers="using:DatePickerControlSandbox.Shared.Helpers"
+    xmlns:models="using:DatePickerControlSandbox.Shared.Models"
+    xmlns:core="using:Telerik.Core"
+    xmlns:controls="using:DatePickerControlSandbox.Shared.Controls"
+    xmlns:viewModels="using:DatePickerControlSandbox.Shared.ViewModels"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    d:DataContext="DatePickerControlSandbox.Shared.ViewModels.ReportViewModel">
+
+    <UserControl.DataContext>
+        <viewModels:ReportViewModel />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <Style x:Key="GroupBoxRow" TargetType="FrameworkElement">
+            <Setter Property="Margin" Value="0,6,0,0" />
+        </Style>
+        <Style x:Key="ColValue" TargetType="Control" BasedOn="{StaticResource GroupBoxRow}">
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,6,0"/>
+        </Style>
+        <Style x:Key="StackedLabel" TargetType="TextBlock" BasedOn="{StaticResource FieldLabel}">
+            <Setter Property="Margin" Value="0,6,6,0"/>
+        </Style>
+
+        <core:BoolToVisibilityConverter x:Key="CnvBoolToVisibility"/>
+
+        <DataTemplate x:Key="IntTemplate" x:DataType="models:ReportParameterHolder" >
+            <StackPanel Orientation="Horizontal" Visibility="{x:Bind Path=Visible, Mode=OneWay}" >
+                <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Prompt}" Width="300"/>
+                <TextBox Text="{Binding Value, Mode=TwoWay}" MinWidth="250" Style="{StaticResource ColValue}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="StringTemplate" x:DataType="models:ReportParameterHolder" >
+            <StackPanel Orientation="Horizontal" Visibility="{Binding Path=Visible, Converter={StaticResource CnvBoolToVisibility}}">
+                <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Prompt}" Width="300"/>
+                <TextBox Text="{Binding Value, Mode=TwoWay}" Style="{StaticResource ColValue}" 
+                         MinWidth="250"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="DateTemplate" x:DataType="models:ReportParameterHolder" >
+            <StackPanel Orientation="Horizontal" Visibility="{Binding Path=Visible, Converter={StaticResource CnvBoolToVisibility}}">
+                <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Prompt}" Width="300"/>
+                <controls:HseDatePicker SelectedDateTime="{Binding Value, Mode=TwoWay}" Style="{StaticResource ColValue}" MinWidth="250" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="BoolTemplate" x:DataType="models:ReportParameterHolder" >
+            <StackPanel Orientation="Horizontal" Visibility="{Binding Path=Visible, Converter={StaticResource CnvBoolToVisibility}}">
+                <TextBlock Style="{StaticResource StackedLabel}" Text="{Binding Prompt}" Width="300"/>
+                <CheckBox VerticalAlignment="Center"  IsChecked="{Binding Value, Mode=TwoWay}" Style="{StaticResource ColValue}" />
+            </StackPanel>
+        </DataTemplate>
+        <helpers:ParameterTemplateSelector DateHolder="{StaticResource DateTemplate}"
+                                       StringHolder="{StaticResource StringTemplate}"
+                                       IntHolder="{StaticResource IntTemplate}"
+                                       BoolHolder="{StaticResource BoolTemplate}"  
+                                       x:Key="ParameterSelector">
+    </helpers:ParameterTemplateSelector>
+    </UserControl.Resources>
+    <ItemsControl ItemsSource="{Binding ReportParameters}" ItemTemplateSelector="{StaticResource ParameterSelector}"  x:Name="ReportParameterList"/>
+</UserControl>

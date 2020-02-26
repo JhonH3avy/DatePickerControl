@@ -10,23 +10,13 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <!--<UserControl.Resources>
-        <Style TargetType="Button" x:Name="CalendarButtonStyle">
-            <Setter Property="Background" Value="White"></Setter>
-            <Setter Property="Content">
-                <Setter.Value>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE787;"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>-->
-
     <Border>
-        <StackPanel Orientation="Horizontal" MaxHeight="40" Width="Auto">
+        <StackPanel Orientation="Horizontal" MaxHeight="40" MinWidth="{Binding MinWidth}" Width="Auto">
             <TextBox x:Name="InputTextBox" 
                      BeforeTextChanging="TextBox_OnBeforeTextChanging"
+                     LostFocus="InputTextBox_OnLostFocus"
                      MinWidth="150"
-                     Text="{Binding SelectedDateTimeStringProp}"/>
+                     Width="Auto"/>
             <Button Click="ShowPopupOffsetClicked" Background="White" >
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE787;"/>
             </Button>
@@ -38,8 +28,7 @@
                         Height="Auto">
                     <Grid Height="Auto"
                           Width="Auto"
-                          RowSpacing="10"
-                          ColumnSpacing="20" >
+                          RowSpacing="10">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
@@ -48,26 +37,19 @@
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <!--<CalendarView x:Name="DatePickerPart" Grid.Row="0" Grid.Column="0" SelectionMode="Single" SelectedDatesChanged="CalendarView_OnSelectedDatesChanged" />-->
                         <input:RadCalendar 
-                            Grid.Row="0" 
+                            Grid.Row="1" 
                             Grid.Column="0" 
                             x:Name="DatePickerPart" 
                             CurrentDateChanged="CalendarView_OnCurrentDatesChanged"
                             Width="350"
                             Height="350"/>
-                        <!--<TimePicker x:Name="TimePickerPart" Grid.Row="0" Grid.Column="1" TimeChanged="TimePicker_OnTimeChanged" />-->
 
-                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Height="35" VerticalAlignment="Center" Spacing="5">
-                            <TextBox x:Name="HourPart" BeforeTextChanging="TimePickerHourPart_OnBeforeTextChanging" ></TextBox>
-                            <TextBlock>:</TextBlock>
-                            <TextBox x:Name="MinutePart" BeforeTextChanging="TimePickerMinutePart_OnBeforeTextChanging" ></TextBox>
-                        </StackPanel>
-
-                        <Button Grid.Row="1" Grid.Column="1" Content="Close" Click="ClosePopupClicked" HorizontalAlignment="Right"/>
+                        <Button Grid.Row="0" Grid.Column="0" Click="ClosePopupClicked" Background="White" >
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE894;"/>
+                        </Button>
                     </Grid>
                 </Border>
             </Popup>

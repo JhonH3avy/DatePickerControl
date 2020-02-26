@@ -22,32 +22,23 @@ namespace DatePickerControlSandbox.Shared.Controls
 {
     public sealed partial class HseDatePicker : UserControl
     {
-
         public HseDatePicker()
         {
             this.InitializeComponent();
-            DataContext = this;
+            //DataContext = this;
             InputTextBox.AddHandler(KeyDownEvent, new KeyEventHandler((s, e) =>
             {
-                if (e.Key == Windows.System.VirtualKey.Enter)
+                if (e.Key == Windows.System.VirtualKey.Enter || e.Key == Windows.System.VirtualKey.Space)
                 {
-                    DatePickerPart.SelectedDateRange = new CalendarDateRange(SelectedDateTime.Date, SelectedDateTime.Date);
-                    DatePickerPart.DisplayDate = SelectedDateTime.Date;
-                    //DatePickerPart.MoveToDate(SelectedDateTime.Date);
-
-                    //TimePickerPart.Time = SelectedDateTime.TimeOfDay;
-                    HourPart.Text = SelectedDateTime.Hour.ToString();
-                    MinutePart.Text = SelectedDateTime.Minute.ToString();
-                    UpdateSelectedDateTimeString(SelectedDateTime.ToString());
+                    //DatePickerPart.SelectedDateRange = new CalendarDateRange(SelectedDateTime, SelectedDateTime);
+                    //DatePickerPart.DisplayDate = SelectedDateTime;
+                    UpdateSelectedDateTimeString(SelectedDateTime.ToString("dd/MM/yyyy"));
                 }
                 else if (e.Key == Windows.System.VirtualKey.Delete)
                 {
-                    SelectedDateTime = new DateTimeOffset();
-                    //TimePickerPart.Time = new TimeSpan(12, 0, 0);
-                    HourPart.Text = "12";
-                    MinutePart.Text = "00";
-                    DatePickerPart.SelectedDateRange = null;
-                    DatePickerPart.MoveToDate(DateTime.Now);
+                    SelectedDateTime = new DateTime();
+                    //DatePickerPart.SelectedDateRange = null;
+                    //DatePickerPart.MoveToDate(DateTime.Now);
                     UpdateSelectedDateTimeString("");
                 }
             }), true);
@@ -58,35 +49,40 @@ namespace DatePickerControlSandbox.Shared.Controls
 
         public bool PopupVisibility
         {
-            get { return (bool) GetValue(PopupVisibilityProperty); }
-            set { SetValue(PopupVisibilityProperty, value); }
+            get => (bool)GetValue(PopupVisibilityProperty);
+            set => SetValue(PopupVisibilityProperty, value);
         }
+
 
         public static readonly DependencyProperty SelectedDateTimeProperty = DependencyProperty.Register(
-            "SelectedDateTime", typeof(DateTimeOffset), typeof(HseDatePicker), new PropertyMetadata(default(DateTimeOffset)));
+            "SelectedDateTime", typeof(DateTime), typeof(HseDatePicker), new PropertyMetadata(null));
 
-        public DateTimeOffset SelectedDateTime
+        //private static void SelectedValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    if (d is HseDatePicker picker)
+        //    {
+        //        //picker.DatePickerPart.SelectedDateRange = new CalendarDateRange(picker.SelectedDateTime, picker.SelectedDateTime);
+        //        //picker.DatePickerPart.DisplayDate = picker.SelectedDateTime;
+        //    }
+        //}
+
+        public DateTime SelectedDateTime
         {
-            get { return (DateTimeOffset) GetValue(SelectedDateTimeProperty); }
-            set { SetValue(SelectedDateTimeProperty, value); }
+            get => (DateTime)GetValue(SelectedDateTimeProperty);
+            set
+            {
+                SetValue(SelectedDateTimeProperty, value);
+                Value = SelectedDateTime;
+            }
         }
 
-        public static readonly DependencyProperty OffsetProperty = DependencyProperty.Register(
-            "Offset", typeof(TimeSpan), typeof(HseDatePicker), new PropertyMetadata(default(TimeSpan)));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
+            "Value", typeof(DateTime), typeof(HseDatePicker), new PropertyMetadata(default(DateTime)));
 
-        public TimeSpan Offset
+        public DateTime Value
         {
-            get { return (TimeSpan) GetValue(OffsetProperty); }
-            set { SetValue(OffsetProperty, value); }
-        }
-
-        public static readonly DependencyProperty SelectedDateTimeStringProperty = DependencyProperty.Register(
-            "SelectedDateTimeString", typeof(string), typeof(HseDatePicker), new PropertyMetadata(default(string)));
-
-        public string SelectedDateTimeString
-        {
-            get { return (string) GetValue(SelectedDateTimeStringProperty); }
-            set { SetValue(SelectedDateTimeStringProperty, value); }
+            get => (DateTime)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, value);
         }
 
         private void ShowPopupOffsetClicked(object sender, RoutedEventArgs e)
@@ -99,39 +95,19 @@ namespace DatePickerControlSandbox.Shared.Controls
             if (StandardPopup.IsOpen) { StandardPopup.IsOpen = false; }
         }
 
-        //private void CalendarView_OnSelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
-        //{
-        //    if (args.AddedDates.Count <= 0) return;
-        //    var selectedDate = args.AddedDates[0];
-        //    if (selectedDate == null) return;
-        //    var builder = new DateTimeOffset(selectedDate.Year, selectedDate.Month, selectedDate.Day, SelectedDateTime.Hour, SelectedDateTime.Minute, 0, SelectedDateTime.Offset);
-        //    SelectedDateTime = builder;
-        //    UpdateSelectedDateTimeString(SelectedDateTime.ToString());
-        //}
-
         private void CalendarView_OnCurrentDatesChanged(object sender, CurrentSelectionChangedEventArgs args)
         {
-            Console.WriteLine("Callback call");
-            if (args.NewSelection == null) return;
-            Console.WriteLine("There is a new value");
-            var selectedDate = args.NewSelection.Value;
-            var builder = new DateTimeOffset(selectedDate.Year, selectedDate.Month, selectedDate.Day, SelectedDateTime.Hour, SelectedDateTime.Minute, 0, SelectedDateTime.Offset);
-            SelectedDateTime = builder;
-            UpdateSelectedDateTimeString(SelectedDateTime.ToString());
+            if (args.NewSelection == null)
+            {
+                return;
+            }
+            SelectedDateTime = args.NewSelection.Value;
+            UpdateSelectedDateTimeString(SelectedDateTime.ToString("dd/MM/yyyy"));
+            ClosePopupClicked(this, null);
         }
-
-        //private void TimePicker_OnTimeChanged(object sender, TimePickerValueChangedEventArgs e)
-        //{
-        //    var selectedTime = e.NewTime;
-        //    if (selectedTime == null) return;
-        //    var builder = new DateTimeOffset(SelectedDateTime.Year, SelectedDateTime.Month, SelectedDateTime.Day, selectedTime.Hours, selectedTime.Minutes, 0, SelectedDateTime.Offset);
-        //    SelectedDateTime = builder;
-        //    UpdateSelectedDateTimeString(SelectedDateTime.ToString());
-        //}
 
         private void UpdateSelectedDateTimeString(string updatedString)
         {
-            SelectedDateTimeString = updatedString;
             InputTextBox.Text = updatedString;
         }
 
@@ -147,14 +123,13 @@ namespace DatePickerControlSandbox.Shared.Controls
                 var year = groups[3].Value;
                 var hour = groups[4].Value;
                 var minute = groups[5].Value;
-                var parsedDay = string.IsNullOrEmpty(day) || day == "0" ? DateTimeOffset.Now.Day : int.Parse(day);
-                var parsedMonth = string.IsNullOrEmpty(month) || month == "0" ? DateTimeOffset.Now.Month : int.Parse(month);
-                var parsedYear = int.Parse(DateTimeOffset.Now.Year.ToString().Substring(0, DateTimeOffset.Now.Year.ToString().Length - year.Length) + year);
+                var parsedDay = string.IsNullOrEmpty(day) || day == "0" ? DateTime.Now.Day : int.Parse(day);
+                var parsedMonth = string.IsNullOrEmpty(month) || month == "0" ? DateTime.Now.Month : int.Parse(month);
+                var parsedYear = int.Parse(DateTime.Now.Year.ToString().Substring(0, DateTime.Now.Year.ToString().Length - year.Length) + year);
                 var parsedHour = string.IsNullOrEmpty(hour) ? 12 : int.Parse(hour);
                 var parsedMinute = string.IsNullOrEmpty(minute) ? 0 : int.Parse(minute);
-                var builder = new DateTimeOffset(parsedYear, parsedMonth, parsedDay, parsedHour, parsedMinute, 0, Offset);
-                SelectedDateTime = builder;
-                
+                SelectedDateTime = new DateTime(parsedYear, parsedMonth, parsedDay, parsedHour, parsedMinute, 0);
+
             }
             else if (dateRegex.IsMatch(args.NewText))
             {
@@ -166,36 +141,9 @@ namespace DatePickerControlSandbox.Shared.Controls
             }
         }
 
-        private void TimePickerHourPart_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        private void InputTextBox_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            var numberRegex = new Regex(@"^([0-9]|1[0-9]|2[0-3])?$");
-            if (numberRegex.IsMatch(args.NewText))
-            {
-                var builder = new DateTimeOffset(SelectedDateTime.Year, SelectedDateTime.Month, SelectedDateTime.Day,
-                    string.IsNullOrEmpty(args.NewText) ? 0 : int.Parse(args.NewText), SelectedDateTime.Minute, 0, SelectedDateTime.Offset);
-                SelectedDateTime = builder;
-                UpdateSelectedDateTimeString(SelectedDateTime.ToString());
-            }
-            else
-            {
-                args.Cancel = true;
-            }
-        }
-
-        private void TimePickerMinutePart_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
-        {
-            var numberRegex = new Regex(@"^([0-5]?[0-9]?)$");
-            if (numberRegex.IsMatch(args.NewText))
-            {
-                var builder = new DateTimeOffset(SelectedDateTime.Year, SelectedDateTime.Month, SelectedDateTime.Day, SelectedDateTime.Hour,
-                    string.IsNullOrEmpty(args.NewText) ? 0 : int.Parse(args.NewText), 0, SelectedDateTime.Offset);
-                SelectedDateTime = builder;
-                UpdateSelectedDateTimeString(SelectedDateTime.ToString());
-            }
-            else
-            {
-                args.Cancel = true;
-            }
+            UpdateSelectedDateTimeString(SelectedDateTime.ToString("dd/MM/yyyy"));
         }
     }
 }

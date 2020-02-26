@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Windows.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -14,6 +15,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using DatePickerControlSandbox.Shared.Services;
+using DatePickerControlSandbox.Shared.ViewModels;
+using DatePickerControlSandbox.Shared.Views;
 #if !__WASM__
 using DatePickerControlSandbox.Annotations;
 #endif
@@ -43,7 +47,7 @@ namespace DatePickerControlSandbox
                 OnPropertyChanged();
             }
         }
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
 #if !__WASM__
@@ -52,6 +56,14 @@ namespace DatePickerControlSandbox
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var paramCapture = new ReportViewModel();
+            var reportParametersView = new ReportView();
+            reportParametersView.DataContext = paramCapture;
+            DialogService.Instance.Show(reportParametersView, paramCapture);
         }
     }
 }
