@@ -61,8 +61,7 @@ namespace DatePickerControlSandbox
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             var paramCapture = new ReportViewModel();
-            var reportParametersView = new ReportView();
-            reportParametersView.DataContext = paramCapture;
+            var reportParametersView = new ReportView {DataContext = paramCapture};
             DialogService.Instance.Show(reportParametersView, paramCapture);
         }
     }

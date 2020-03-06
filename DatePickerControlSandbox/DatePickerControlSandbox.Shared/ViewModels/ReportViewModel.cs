@@ -46,6 +46,18 @@ namespace DatePickerControlSandbox.Shared.ViewModels
             Title = "Test report";
             OkText = "OK";
             CancelText = "Cancel";
+            OkCommand = new SimpleCommand(async (param) =>
+            {
+                if (!IsValid() && param is ContentDialogClosingEventArgs args)
+                {
+                    await new MessageDialog("Please complete all the mandatory parameters and correct any validation errors").ShowAsync();
+                    args.Cancel = true;
+                }
+            });
+            CancelCommand = new SimpleCommand((param) =>
+            {
+                Console.WriteLine("Cancel command invoked");
+            });
         }
 
         public void Dispose()
@@ -58,6 +70,7 @@ namespace DatePickerControlSandbox.Shared.ViewModels
             if (!IsValid())
             {
                 new MessageDialog("Please complete all the mandatory parameters and correct any validation errors").ShowAsync();
+                args.Cancel = true;
                 return false;
             }
 

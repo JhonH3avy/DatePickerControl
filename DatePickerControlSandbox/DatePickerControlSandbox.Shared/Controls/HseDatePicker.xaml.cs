@@ -17,10 +17,11 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Telerik.UI.Xaml.Controls.Input;
 using Telerik.UI.Xaml.Controls.Input.Calendar;
+using DatePickerControlSandbox.Shared.Controls.Extensions;
 
 namespace DatePickerControlSandbox.Shared.Controls
 {
-    public sealed partial class HseDatePicker : UserControl
+    public sealed partial class HseDatePicker : UserControl, IFormErrorBorder
     {
         public HseDatePicker()
         {

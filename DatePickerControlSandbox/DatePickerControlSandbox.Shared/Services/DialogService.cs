@@ -16,7 +16,7 @@ namespace DatePickerControlSandbox.Shared.Services
 
         public async void Show(object dialogContent, IOKCancelViewModel viewModel)
         {
-            var contentDialog = new Windows.UI.Xaml.Controls.ContentDialog
+            var contentDialog = new ContentDialog
             {
                 Content = dialogContent,
                 PrimaryButtonText = "Ok",
@@ -27,17 +27,27 @@ namespace DatePickerControlSandbox.Shared.Services
             {
                 Console.WriteLine("hooking");
                 contentDialog.DataContext = viewModel;
-                contentDialog.Closing += (sender, args) =>
-                {
-                    Console.WriteLine("Closing " + args.Result);
+                //contentDialog.Closing += (sender, args) =>
+                //{
+                //    Console.WriteLine("Closing " + args.Result);
 
-                    if (args.Result == ContentDialogResult.Primary)
-                    {
-                        viewModel.OK(args);
-                    }
-                };
+                //    if (args.Result == ContentDialogResult.Primary)
+                //    {
+                //        viewModel.OK(args);
+                //    }
+                //};
+                contentDialog.PrimaryButtonCommand = viewModel.OkCommand;
+                contentDialog.SecondaryButtonCommand = viewModel.CancelCommand;
             }
             var res = await contentDialog.ShowAsync(ContentDialogPlacement.Popup);
+            if (res == ContentDialogResult.Primary)
+            {
+                viewModel.OkCommand.Execute(null);
+            }
+            else
+            {
+                viewModel.CancelCommand.Execute(null);
+            }
         }
     }
 }

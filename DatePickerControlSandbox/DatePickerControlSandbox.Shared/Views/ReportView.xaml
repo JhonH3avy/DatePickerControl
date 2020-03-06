@@ -9,15 +9,12 @@
     xmlns:models="using:DatePickerControlSandbox.Shared.Models"
     xmlns:core="using:Telerik.Core"
     xmlns:controls="using:DatePickerControlSandbox.Shared.Controls"
+    xmlns:extensions="using:DatePickerControlSandbox.Shared.Controls.Extensions"
     xmlns:viewModels="using:DatePickerControlSandbox.Shared.ViewModels"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
     d:DataContext="DatePickerControlSandbox.Shared.ViewModels.ReportViewModel">
-
-    <UserControl.DataContext>
-        <viewModels:ReportViewModel />
-    </UserControl.DataContext>
 
     <UserControl.Resources>
         <Style x:Key="GroupBoxRow" TargetType="FrameworkElement">
@@ -40,26 +37,27 @@
         <DataTemplate x:Key="IntTemplate" x:DataType="models:ReportParameterHolder" >
             <StackPanel Orientation="Horizontal" Visibility="{x:Bind Path=Visible, Mode=OneWay}" >
                 <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Prompt}" Width="300"/>
-                <TextBox Text="{Binding Value, Mode=TwoWay}" MinWidth="250" Style="{StaticResource ColValue}"/>
+                <TextBox Text="{Binding Value, Mode=TwoWay}" MinWidth="250" Style="{StaticResource ColValue}"
+                         extensions:FormControlErrorBorder.HasErrors="{Binding HasErrors}"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="StringTemplate" x:DataType="models:ReportParameterHolder" >
             <StackPanel Orientation="Horizontal" Visibility="{Binding Path=Visible, Converter={StaticResource CnvBoolToVisibility}}">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Prompt}" Width="300"/>
-                <TextBox Text="{Binding Value, Mode=TwoWay}" Style="{StaticResource ColValue}" 
+                <TextBox Text="{Binding Value, Mode=TwoWay}" Style="{StaticResource ColValue}" extensions:FormControlErrorBorder.HasErrors="{Binding HasErrors}"
                          MinWidth="250"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="DateTemplate" x:DataType="models:ReportParameterHolder" >
             <StackPanel Orientation="Horizontal" Visibility="{Binding Path=Visible, Converter={StaticResource CnvBoolToVisibility}}">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Prompt}" Width="300"/>
-                <controls:HseDatePicker SelectedDateTime="{Binding Value, Mode=TwoWay}" Style="{StaticResource ColValue}" MinWidth="250" />
+                <controls:HseDatePicker SelectedDateTime="{Binding Value, Mode=TwoWay}" Style="{StaticResource ColValue}" MinWidth="250" extensions:FormControlErrorBorder.HasErrors="{Binding HasErrors}"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="BoolTemplate" x:DataType="models:ReportParameterHolder" >
             <StackPanel Orientation="Horizontal" Visibility="{Binding Path=Visible, Converter={StaticResource CnvBoolToVisibility}}">
                 <TextBlock Style="{StaticResource StackedLabel}" Text="{Binding Prompt}" Width="300"/>
-                <CheckBox VerticalAlignment="Center"  IsChecked="{Binding Value, Mode=TwoWay}" Style="{StaticResource ColValue}" />
+                <CheckBox VerticalAlignment="Center"  IsChecked="{Binding Value, Mode=TwoWay}" Style="{StaticResource ColValue}" extensions:FormControlErrorBorder.HasErrors="{Binding HasErrors}"/>
             </StackPanel>
         </DataTemplate>
         <helpers:ParameterTemplateSelector DateHolder="{StaticResource DateTemplate}"
