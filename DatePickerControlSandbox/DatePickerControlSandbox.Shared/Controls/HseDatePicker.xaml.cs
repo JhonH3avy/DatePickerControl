@@ -33,7 +33,7 @@ namespace DatePickerControlSandbox.Shared.Controls
                 {
                     //DatePickerPart.SelectedDateRange = new CalendarDateRange(SelectedDateTime, SelectedDateTime);
                     //DatePickerPart.DisplayDate = SelectedDateTime;
-                    UpdateSelectedDateTimeString(SelectedDateTime.ToString("dd/MM/yyyy"));
+                    UpdateSelectedDateTimeString(SelectedDateTime.Value.ToString("dd/MM/yyyy"));
                 }
                 else if (e.Key == Windows.System.VirtualKey.Delete)
                 {
@@ -56,7 +56,7 @@ namespace DatePickerControlSandbox.Shared.Controls
 
 
         public static readonly DependencyProperty SelectedDateTimeProperty = DependencyProperty.Register(
-            "SelectedDateTime", typeof(DateTime), typeof(HseDatePicker), new PropertyMetadata(null));
+            "SelectedDateTime", typeof(DateTime?), typeof(HseDatePicker), new PropertyMetadata(null));
 
         //private static void SelectedValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         //{
@@ -67,23 +67,10 @@ namespace DatePickerControlSandbox.Shared.Controls
         //    }
         //}
 
-        public DateTime SelectedDateTime
+        public DateTime? SelectedDateTime
         {
-            get => (DateTime)GetValue(SelectedDateTimeProperty);
-            set
-            {
-                SetValue(SelectedDateTimeProperty, value);
-                Value = SelectedDateTime;
-            }
-        }
-
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value", typeof(DateTime), typeof(HseDatePicker), new PropertyMetadata(default(DateTime)));
-
-        public DateTime Value
-        {
-            get => (DateTime)GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
+            get => (DateTime?)GetValue(SelectedDateTimeProperty);
+            set => SetValue(SelectedDateTimeProperty, value);
         }
 
         private void ShowPopupOffsetClicked(object sender, RoutedEventArgs e)
@@ -103,7 +90,7 @@ namespace DatePickerControlSandbox.Shared.Controls
                 return;
             }
             SelectedDateTime = args.NewSelection.Value;
-            UpdateSelectedDateTimeString(SelectedDateTime.ToString("dd/MM/yyyy"));
+            UpdateSelectedDateTimeString(SelectedDateTime.Value.ToString("dd/MM/yyyy"));
             ClosePopupClicked(this, null);
         }
 
@@ -144,7 +131,7 @@ namespace DatePickerControlSandbox.Shared.Controls
 
         private void InputTextBox_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            UpdateSelectedDateTimeString(SelectedDateTime.ToString("dd/MM/yyyy"));
+            UpdateSelectedDateTimeString(SelectedDateTime.Value.ToString("dd/MM/yyyy"));
         }
     }
 }

@@ -41,44 +41,48 @@ namespace DatePickerControlSandbox.Shared.Models
         {
             Console.WriteLine($"Doing validation");
             errors.Clear();
+            //if (!Nullable && !HasValue)
+            //{
+            //    errors.Add("Value", new List<ValidationResult>
+            //    {
+            //        new ValidationResult("Value is mandatory", new [] {"Value"})
+            //    });
+            //    InvokeErrorsChanged(new DataErrorsChangedEventArgs("Value"));
+            //}
+            //if (HasValue && ParameterType == TypeCode.DateTime
+            //             && Value is DateTime dateTime
+            //             && (dateTime < StaticParameters.MinDate || dateTime > StaticParameters.MaxDate))
+            //{
+            //    errors.Add("Value", new List<ValidationResult>
+            //    {
+            //        new ValidationResult(StaticParameters.DateInvalidMessage, new [] {"Value"})
+            //    });
+            //    InvokeErrorsChanged(new DataErrorsChangedEventArgs("Value"));
+            //}
+            //if (HasErrors)
+            //{
+            //    Console.WriteLine($"Name:{Name} Value:{Value}");
+            //    foreach (var error in errors)
+            //    {
+            //        foreach (var innerError in error.Value)
+            //        {
+            //            Console.WriteLine($"ErrorKey:{error.Key} ErrorValue:{innerError.ErrorMessage}");
+            //        }
+            //    }
+            //}
+            errors.Add("Value", new List<ValidationResult>
+            {
+                new ValidationResult("Value is mandatory", new [] {"Value"})
+            });
             InvokeErrorsChanged(new DataErrorsChangedEventArgs("Value"));
-            if (!Nullable && !HasValue)
-            {
-                errors.Add("Value", new List<ValidationResult>
-                {
-                    new ValidationResult("Value is mandatory", new [] {"Value"})
-                });
-                InvokeErrorsChanged(new DataErrorsChangedEventArgs("Value"));
-            }
-            if (HasValue && ParameterType == TypeCode.DateTime
-                         && Value is DateTime dateTime
-                         && (dateTime < StaticParameters.MinDate || dateTime > StaticParameters.MaxDate))
-            {
-                errors.Add("Value", new List<ValidationResult>
-                {
-                    new ValidationResult(StaticParameters.DateInvalidMessage, new [] {"Value"})
-                });
-                InvokeErrorsChanged(new DataErrorsChangedEventArgs("Value"));
-            }
-            if (HasErrors)
-            {
-                Console.WriteLine($"Name:{Name} Value:{Value}");
-                foreach (var error in errors)
-                {
-                    foreach (var innerError in error.Value)
-                    {
-                        Console.WriteLine($"ErrorKey:{error.Key} ErrorValue:{innerError.ErrorMessage}");
-                    }
-                }
-            }
             return HasErrors;
         }
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        //public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public void InvokeErrorsChanged(DataErrorsChangedEventArgs e)
         {
-            ErrorsChanged?.Invoke(this, e);
+            //ErrorsChanged?.Invoke(this, e);
+            OnPropertyChanged(nameof(HasErrors));
         }
     }
 
