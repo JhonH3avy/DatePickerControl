@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 using Telerik.UI.Xaml.Controls.Input;
 using Telerik.UI.Xaml.Controls.Input.Calendar;
 using DatePickerControlSandbox.Shared.Controls.Extensions;
+using System.Globalization;
 
 namespace DatePickerControlSandbox.Shared.Controls
 {
@@ -33,7 +34,7 @@ namespace DatePickerControlSandbox.Shared.Controls
                 {
                     //DatePickerPart.SelectedDateRange = new CalendarDateRange(SelectedDateTime, SelectedDateTime);
                     //DatePickerPart.DisplayDate = SelectedDateTime;
-                    UpdateSelectedDateTimeString(SelectedDateTime.Value.ToString("dd/MM/yyyy"));
+                    UpdateSelectedDateTimeString(SelectedDateTime.Value.ToShortDateString());
                 }
                 else if (e.Key == Windows.System.VirtualKey.Delete)
                 {
@@ -90,7 +91,7 @@ namespace DatePickerControlSandbox.Shared.Controls
                 return;
             }
             SelectedDateTime = args.NewSelection.Value;
-            UpdateSelectedDateTimeString(SelectedDateTime.Value.ToString("dd/MM/yyyy"));
+            UpdateSelectedDateTimeString(SelectedDateTime.Value.ToShortDateString());
             ClosePopupClicked(this, null);
         }
 
@@ -106,18 +107,7 @@ namespace DatePickerControlSandbox.Shared.Controls
             if (quickDateRegex.IsMatch(args.NewText))
             {
                 var groups = quickDateRegex.Match(args.NewText).Groups;
-                var day = groups[1].Value;
-                var month = groups[2].Value;
-                var year = groups[3].Value;
-                var hour = groups[4].Value;
-                var minute = groups[5].Value;
-                var parsedDay = string.IsNullOrEmpty(day) || day == "0" ? DateTime.Now.Day : int.Parse(day);
-                var parsedMonth = string.IsNullOrEmpty(month) || month == "0" ? DateTime.Now.Month : int.Parse(month);
-                var parsedYear = int.Parse(DateTime.Now.Year.ToString().Substring(0, DateTime.Now.Year.ToString().Length - year.Length) + year);
-                var parsedHour = string.IsNullOrEmpty(hour) ? 12 : int.Parse(hour);
-                var parsedMinute = string.IsNullOrEmpty(minute) ? 0 : int.Parse(minute);
-                SelectedDateTime = new DateTime(parsedYear, parsedMonth, parsedDay, parsedHour, parsedMinute, 0);
-
+                SelectedDateTime = BuildDateTimeFromRegexGroups(groups);
             }
             else if (dateRegex.IsMatch(args.NewText))
             {
@@ -129,9 +119,41 @@ namespace DatePickerControlSandbox.Shared.Controls
             }
         }
 
+        private DateTime BuildDateTimeFromRegexGroups(GroupCollection groups)
+        {
+            if (CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.StartsWith('M'))
+            {
+                var month = groups[1].Value;
+                var day = groups[2].Value;
+                var year = groups[3].Value;
+                var hour = groups[4].Value;
+                var minute = groups[5].Value;
+                var parsedDay = string.IsNullOrEmpty(day) || day == "0" ? DateTime.Now.Day : int.Parse(day);
+                var parsedMonth = string.IsNullOrEmpty(month) || month == "0" ? DateTime.Now.Month : int.Parse(month);
+                var parsedYear = int.Parse(DateTime.Now.Year.ToString().Substring(0, DateTime.Now.Year.ToString().Length - year.Length) + year);
+                var parsedHour = string.IsNullOrEmpty(hour) ? 12 : int.Parse(hour);
+                var parsedMinute = string.IsNullOrEmpty(minute) ? 0 : int.Parse(minute);
+                return new DateTime(parsedYear, parsedMonth, parsedDay, parsedHour, parsedMinute, 0);
+            }
+            else
+            {
+                var day = groups[1].Value;
+                var month = groups[2].Value;
+                var year = groups[3].Value;
+                var hour = groups[4].Value;
+                var minute = groups[5].Value;
+                var parsedDay = string.IsNullOrEmpty(day) || day == "0" ? DateTime.Now.Day : int.Parse(day);
+                var parsedMonth = string.IsNullOrEmpty(month) || month == "0" ? DateTime.Now.Month : int.Parse(month);
+                var parsedYear = int.Parse(DateTime.Now.Year.ToString().Substring(0, DateTime.Now.Year.ToString().Length - year.Length) + year);
+                var parsedHour = string.IsNullOrEmpty(hour) ? 12 : int.Parse(hour);
+                var parsedMinute = string.IsNullOrEmpty(minute) ? 0 : int.Parse(minute);
+                return new DateTime(parsedYear, parsedMonth, parsedDay, parsedHour, parsedMinute, 0);
+            }
+        }
+
         private void InputTextBox_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            UpdateSelectedDateTimeString(SelectedDateTime.Value.ToString("dd/MM/yyyy"));
+            UpdateSelectedDateTimeString(SelectedDateTime.Value.ToShortDateString());
         }
     }
 }

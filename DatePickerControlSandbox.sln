@@ -23,6 +23,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		DatePickerControlSandbox\DatePickerControlSandbox.Shared\DatePickerControlSandbox.Shared.projitems*{1640a56f-12d6-4577-a357-48ed692de8b1}*SharedItemsImports = 4
 		DatePickerControlSandbox\DatePickerControlSandbox.Shared\DatePickerControlSandbox.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
+		DatePickerControlSandbox\DatePickerControlSandbox.Shared\DatePickerControlSandbox.Shared.projitems*{d5bcf294-594a-46d0-9f3b-0a6fc05ab3df}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

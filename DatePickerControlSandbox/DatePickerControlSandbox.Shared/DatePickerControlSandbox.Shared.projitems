@@ -20,6 +20,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Extensions\FormControlErrorBorder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HseDatePicker.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CultureInfoHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ParameterTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ReportParameterHolder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ValidationResult.cs" />
